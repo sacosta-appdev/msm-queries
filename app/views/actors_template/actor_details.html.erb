@@ -1,0 +1,40 @@
+<h1>Actor #<%= @actor_id %> details</h1>
+
+<a href="/actors">Go back</a>
+
+
+<dl>
+  <dt>Name</dt>
+  <dd><%= @actor.name %></dd>
+
+  <dt>Dob</dt>
+  <dd><%= @actor.dob %></dd>
+
+  <dt>Bio</dt>
+  <dd><%= @actor.bio %></dd>
+
+  <dt>Image</dt>
+  <dd><img src="http://robohash.org/<%= @actor.image %>"></dd>
+
+  <dt>Created at</dt>
+  <dd><%= time_ago_in_words(@actor.created_at) %></dd>
+
+  <dt>Updated at</dt>
+  <dd><%= time_ago_in_words(@actor.updated_at) %></dd>
+</dl>
+
+<h2>Filmography</h2>
+
+<table border="1">
+  <% @filmography.each do |a_film| %>
+    <tr>
+      <td><%= Movie.all.where({ :id => a_film.movie_id })[0].title %></td>
+      <td><%= Movie.all.where({ :id => a_film.movie_id })[0].year %></td>
+      <td><%= Director.all.where({ :id => (Movie.all.where({ :id => a_film.movie_id })[0].director_id) })[0].name %></td>
+      <td><%= a_film.name %></td>
+      <td>
+        <a href="/movies/<%= a_film.movie_id %>">Show details</a>
+      </td>
+    </tr>
+  <% end %>
+</table>
